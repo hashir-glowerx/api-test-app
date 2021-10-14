@@ -1,9 +1,10 @@
 
 import './App.css';
-import Sigin from "./Form/Sigin/index"
+import SignUp from "./pages/SignUp"
+
 function App() {
   return (
-  <Sigin/>
+  <SignUp/>
   );
 }
 

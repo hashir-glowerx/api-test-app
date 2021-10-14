@@ -1,37 +1,148 @@
 import React from "react";
-import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
+import { Grid, Paper, Avatar, TextField, Button, Box } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-const Login = () => {
-
+function SignUp() {
   const paperStyle = {
-    padding: 20,
+    padding: 5,
     height: "100%",
-    width: 300,
+    width: "70vh",
     margin: "0 auto",
   };
-
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "15px 0" };
-  
-  const initialValues = {
-    username: "",
-    password: "",
-  };
-  const validationSchema = Yup.object().shape({
-    username: Yup.string()
-      .email("please enter valid email")
-      .required("This Field is Required"),
-    password: Yup.string()
-      .min(6, "Password is to short")
-      .max(8, "Password is to long")
-      .required("This Field is Required"),
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      address: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+      // submit form
+    },
+    validationSchema: yup.object({
+      name: yup.string().required("This field is required."),
+      address: yup.string().required("This field is required."),
+      email: yup.string().email().required("This field is required."),
+      password: yup
+        .string()
+        .min(6, "Password is too short.")
+        .max(12, "Password is too long.")
+        .required("This field is required."),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Password must match")
+        .required("Confirm password is required."),
+    }),
   });
-  const onSubmit = (values, props) => {};
+
+  const renderSignUpForm = () => {
+    return (
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            required
+            label="name"
+            id="name"
+            placeholder="name"
+            onChange={formik.handleChange}
+            helperText={
+              formik.errors.name ? (
+                <div className="error">{formik.errors.name}</div>
+              ) : (
+                ""
+              )
+            }
+            value={formik.values.name}
+          />
+          <TextField
+            required
+            label="email"
+            id="email"
+            placeholder="Email"
+            onChange={formik.handleChange}
+            helperText={
+              formik.errors.email ? (
+                <div className="error">{formik.errors.email}</div>
+              ) : (
+                ""
+              )
+            }
+            value={formik.values.email}
+          />{" "}
+          <TextField
+            required
+            label="address"
+            id="address"
+            placeholder="address"
+            onChange={formik.handleChange}
+            helperText={
+              formik.errors.address ? (
+                <div className="error">{formik.errors.address}</div>
+              ) : (
+                ""
+              )
+            }
+            value={formik.values.address}
+          />
+          <TextField
+            required
+            label="password"
+            type="password"
+            id="password"
+            placeholder="password"
+            helperText={
+              formik.errors.password ? (
+                <div className="error">{formik.errors.password}</div>
+              ) : (
+                ""
+              )
+            }
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          <TextField
+            required
+            label="confirm password"
+            type="password"
+            id="confirmPassword"
+            placeholder="confirm Password"
+            helperText={
+              formik.errors.confirmPassword ? (
+                <div className="error">{formik.errors.confirmPassword}</div>
+              ) : (
+                ""
+              )
+            }
+            onChange={formik.handleChange}
+            value={formik.values.confirmPassword}
+          />
+          <Button style={btnstyle} fullWidth color="error" variant="contained">
+            SignUp
+          </Button>
+          <Button fullWidth color="primary" variant="contained">
+            SignIn
+          </Button>
+        </div>
+      </Box>
+    );
+  };
+
   return (
-    <Grid style={{ marginTop: "70px" }}>
+    <Grid>
       <Paper style={paperStyle}>
         <Grid align="center">
           <img
@@ -43,48 +154,13 @@ const Login = () => {
           <Avatar style={avatarStyle}>
             <LockIcon />
           </Avatar>
-          <h2>Sign In</h2>
+          <h2>Sign Up</h2>
         </Grid>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          <Form>
-            <Field
-              as={TextField}
-              label="UserEmail"
-              name="username"
-              placeholder="Enter UserEmail"
-              fullWidth
-              helperText={<ErrorMessage name="username" />}
-            />
-            <Field
-              as={TextField}
-              label="Password"
-              name="password"
-              placeholder="Enter Password"
-              type="password"
-              fullWidth
-              helperText={<ErrorMessage name="password" />}
-            />
 
-            <Button
-              style={btnstyle}
-              fullWidth
-              color="primary"
-              variant="contained"
-            >
-              SigIn
-            </Button>
-            <Button fullWidth color="error" variant="contained">
-              SigUp
-            </Button>
-          </Form>
-        </Formik>
+        {renderSignUpForm()}
       </Paper>
     </Grid>
   );
-};
+}
 
-export default Login;
+export default SignUp;

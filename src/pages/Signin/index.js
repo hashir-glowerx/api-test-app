@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
+import { Grid, Paper, Avatar } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import SignInForm from '../../Form/Signin';
 
 const SignIn = (props) => {
   
@@ -13,69 +12,9 @@ const SignIn = (props) => {
     margin: "0 auto",
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
-  const btnstyle = { margin: "15px 0" };
-
-  const handleOnSignIn = ()=>{
-    props.handleOnChange();
-  }
-
-  const formik = useFormik({
-    initialValues: { username: "", password: "" },
-    onSubmit: (values) => {
-      alert(values);
-    },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .email("Please enter valid email")
-        .required("This Field is Required"),
-      password: Yup.string()
-        .min(6, "Password is to short")
-        .max(8, "Password is to long")
-        .required("This Field is Required"),
-    }),
-  });
-
-  const renderSignInForm = () => {
-    return (
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          id="username"
-          placeholder="Email"
-          fullWidth
-          onChange={formik.handleChange}
-          value={formik.values.username}
-        />
-        {/* To show warning messages */}
-        {formik.errors.username ? (
-          <div className="error">{formik.errors.username}</div>
-        ) : (
-          ""
-        )}
-        <TextField
-          id="password"
-          placeholder="Password"
-          type="password"
-          fullWidth
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        {/* To show warning messages */}
-        {formik.errors.password ? (
-          <div className="error">{formik.errors.password}</div>
-        ) : (
-          ""
-        )}
-        <Button style={btnstyle} fullWidth color="primary" variant="contained">
-          SignIn
-        </Button>
-        <Button fullWidth color="error" variant="contained" onClick={()=>handleOnSignIn()}>
-          SignUp
-        </Button>
-      </form>
-    );
-  };
+   
   return (
-    <Grid style={{ marginTop: "70px" }}>
+    <Grid>
       <Paper style={paperStyle}>
         <Grid align="center">
           <img
@@ -87,10 +26,10 @@ const SignIn = (props) => {
           <Avatar style={avatarStyle}>
             <LockIcon />
           </Avatar>
-          <h2>Sign In</h2>
+          <h3>Sign In</h3>
         </Grid>
-
-        {renderSignInForm()}
+        <SignInForm/>
+        
       </Paper>
     </Grid>
   );

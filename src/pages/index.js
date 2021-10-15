@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import SignUp from "../SignUp";
-import SignIn from "../Signin";
-const Page = () => {
-  const [nextbutton, setNextbutton] = useState(true);
-  const handleOnChange = () => {
-    setNextbutton(!nextbutton);
-  };
+import React from "react";
+import SignUp from "./SignUp";
+import SignIn from "./Signin";
+import {   BrowserRouter as Router,  Switch,  Route} from "react-router-dom";
+
+const Page = ()=>{
   return (
-    <div>
-      {/* {false ?<SignIn handleOnChange={handleOnChange} /> : <SignUp />} */}
-      <SignUp />
-    </div>
+    <Router>
+      <Switch>
+      <Route exact path="/" component={SignIn}/>
+      <Route exact path="/signup" component={SignUp}/>
+    </Switch>
+    </Router>
+ 
   );
 };
 

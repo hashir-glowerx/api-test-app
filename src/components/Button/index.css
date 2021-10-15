@@ -1,0 +1,11 @@
+.input_field fieldset{
+    border-color: #82BC43;
+}
+
+
+.input_field:active fieldset{
+    border-color: #82BC43 !important;
+}
+.input_field:focus fieldset{
+    border: #82BC43 !important;
+}

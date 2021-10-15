@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import InputField from "../../components/Input";
 const SignUpForm = () => {
+  const [response, setresponse] = React.useState()
   const btnstyle = { margin: "15px 0" };
   const formik = useFormik({
     initialValues: {
@@ -14,7 +15,7 @@ const SignUpForm = () => {
       confirmPassword: "",
     },
     onSubmit: (values) => {
-      const response = fetch("https://reqres.in/api/register", {
+      const res = fetch("https://reqres.in/api/register", {
         method: "POST",
         body: JSON.stringify({
           name: values.name,
@@ -25,10 +26,13 @@ const SignUpForm = () => {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
-        .then((response) => response.json())
+        .then((response) => {  
+          console.log(response.status);
+          setresponse(response)
+          response.json()})
         .then((json) => console.log(json));
+          
         console.log(response.status);
-    
     },
     validationSchema: yup.object({
       name: yup.string().required("This field is required."),
@@ -96,10 +100,11 @@ const SignUpForm = () => {
       >
         SignUp
       </Button>
-      <Link to="/">
+      <Link to="/signin">
         {" "}
         <h4>Already have an account ? Login</h4>
       </Link>
+
     </form>
   );
 };

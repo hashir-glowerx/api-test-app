@@ -1,0 +1,11 @@
+.button {
+   background-color: #82BC43;
+}
+
+.button:hover {
+    background-color: #97c761 !important;
+    color: rgba(0, 0, 0, 0.623);
+}
+.button:focus {
+    color: #82BC43 !important;
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import {Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -7,7 +6,6 @@ import Button from "../../components/Button";
 import InputField from "../../components/Input";
 const SignUpForm = () => {
   const btnstyle = { margin: "15px 0" };
-  
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -16,8 +14,21 @@ const SignUpForm = () => {
       confirmPassword: "",
     },
     onSubmit: (values) => {
-      console.log(values);
-      // submit form
+      const response = fetch("https://reqres.in/api/register", {
+        method: "POST",
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+        console.log(response.status);
+    
     },
     validationSchema: yup.object({
       name: yup.string().required("This field is required."),
@@ -35,61 +46,61 @@ const SignUpForm = () => {
   });
 
   return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <InputField
+    <form onSubmit={formik.handleSubmit}>
+      <InputField
         fullWidth
-          required
-          label="name"
-          id="name"
-          placeholder="name"
-          onChange={formik.handleChange}
-          value={formik.values.name}
-        />
+        required
+        label="name"
+        id="name"
+        placeholder="name"
+        onChange={formik.handleChange}
+        value={formik.values.name}
+      />
 
-        <InputField
-          required
-          label="email"
-          id="email"
-          placeholder="Email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
+      <InputField
+        required
+        fullWidth
+        label="email"
+        id="email"
+        placeholder="Email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+      />
 
-        <InputField
-          required
-          label="password"
-          type="password"
-          id="password"
-          placeholder="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        <InputField
-          required
-          label="confirm password"
-          type="password"
-          id="confirmPassword"
-          placeholder="confirm Password"
-          onChange={formik.handleChange}
-          value={formik.values.confirmPassword}
-        />
-        <Button style={btnstyle} fullWidth color="error" variant="contained">
-          SignUp
-        </Button>
-        <Link to="/">
-          {" "}
-          <h4>Already have an account ? Login</h4>
-        </Link>
-      </div>
-    </Box>
+      <InputField
+        required
+        fullWidth
+        label="password"
+        type="password"
+        id="password"
+        placeholder="password"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+      />
+      <InputField
+        required
+        fullWidth
+        label="confirm password"
+        type="password"
+        id="confirmPassword"
+        placeholder="confirm Password"
+        onChange={formik.handleChange}
+        value={formik.values.confirmPassword}
+      />
+      <Button
+        type="submit"
+        style={btnstyle}
+        fullWidth
+        color="success"
+        variant="contained"
+      >
+        SignUp
+      </Button>
+      <Link to="/">
+        {" "}
+        <h4>Already have an account ? Login</h4>
+      </Link>
+    </form>
   );
 };
 

@@ -1,0 +1,19 @@
+.form-input fieldset {
+    border-color: #82BC43 !important;
+}
+
+.form-input:hover fieldset {
+    border: 1px solid #82BC43 !important;
+}
+
+.form-input:active fieldset {
+    border-color: #82BC43 !important;
+}
+
+.form-input:focus fieldset {
+    border-color: #82BC43 !important;
+}
+
+.form-input label.Mui-focused {
+    color: #4E8C41;
+}

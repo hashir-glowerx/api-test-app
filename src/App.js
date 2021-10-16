@@ -1,11 +1,16 @@
+import { Route, Switch } from "react-router-dom";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
+import Dashboard from "./pages/dashboard";
 
-import './App.css';
-import SignUp from "./pages/SignUp"
-
-function App() {
+const App = () => {
   return (
-  <SignUp/>
+    <Switch>
+      <Route path="/" component={Dashboard} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/login" component={Login} />
+    </Switch>
   );
-}
+};
 
 export default App;

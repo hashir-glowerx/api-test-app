@@ -1,9 +1,28 @@
 import React from "react";
+import { useField } from "formik";
 import { TextField } from "@mui/material";
 import "./index.css";
 
-const Input = ({ label, placeholder, value, handleChange, ...rest }) => {
-  return <TextField className={"form-input"} size={"small"} fullWidth label={label} placeholder={placeholder} onChange={handleChange} value={value} {...rest} />;
+const Input = ({ name, ...otherProps }) => {
+  const [field, meta] = useField(name);
+
+  const configTextField = {
+    ...field,
+    ...otherProps,
+    fullWidth: true,
+    size: "small",
+    variant: "outlined",
+    error: false,
+    autoComplete: "off",
+    helperText: "",
+  };
+
+  if (meta && meta.touched && meta.error) {
+    configTextField.error = true;
+    configTextField.helperText = meta.error;
+  }
+
+  return <TextField className="form-input" {...configTextField} />;
 };
 
 export default Input;

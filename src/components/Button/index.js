@@ -4,8 +4,8 @@ import "./index.css";
 
 const Button = ({ color, type, variant, value, loading, ...rest }) => {
   return (
-    <MuiButton className="form-button" fullWidth color={color} variant={variant} {...rest} disabled={loading} type={type}>
-      {loading && <CircularProgress className="form-button__loading" size={16} />}
+    <MuiButton className="button" fullWidth color={color} variant={variant} {...rest} disabled={loading} type={type}>
+      {loading && <CircularProgress className="button__loading" size={16} />}
       {value}
     </MuiButton>
   );

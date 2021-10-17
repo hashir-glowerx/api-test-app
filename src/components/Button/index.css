@@ -1,17 +1,22 @@
-.form-button {
+.button {
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
     color: #82BC43 !important;
     border-color: #82BC43 !important;
 }
 
-.form-button:hover {
+.button:hover {
     background-color: #82BC43 !important;
     color: #fff !important;
     border-color: #fff !important;
 }
 
-.form-button__loading {
+.button:disabled {
+    color: #999 !important;
+    border-color: #999 !important;
+}
+
+.button__loading {
     color: #82BC43 !important;
     margin-right: 0.5rem;
 }

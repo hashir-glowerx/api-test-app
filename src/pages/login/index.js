@@ -1,36 +1,11 @@
 import { Grid, Paper, Box, Link } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import LockIcon from "@mui/icons-material/Lock";
 
 // Custom components
-import Input from "../../components/Input";
-import Button from "../../components/Button";
-
-// Hooks
-import { useFormik } from "formik";
-
-// Validation classes
-import LoginValidation from "../../validations/login";
-
-// Custom css file
-import "../../common.css";
+import LoginForm from "../../components/Form/Login";
 
 const Login = () => {
-  const { loginStatus, setLoginStatus } = useState(false);
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      console.log(values);
-      // submit form
-    },
-    validationSchema: LoginValidation.stg,
-  });
-
   const renderSignUpForm = () => {
     return (
       <Box
@@ -40,29 +15,7 @@ const Login = () => {
         noValidate
         autoComplete="off"
       >
-        <form onSubmit={formik.handleSubmit} className="card-container__form">
-          <Input
-            required
-            label="Email"
-            id="email"
-            placeholder="Email"
-            onChange={formik.handleChange}
-            helperText={formik.errors.email ? <div className="error">{formik.errors.email}</div> : ""}
-            value={formik.values.email}
-          />
-          <Input
-            required
-            label="Password"
-            type="password"
-            id="password"
-            placeholder="Password"
-            helperText={formik.errors.password ? <div className="error">{formik.errors.password}</div> : ""}
-            onChange={formik.handleChange}
-            value={formik.values.password}
-          />
-
-          <Button loading={loginStatus} type="submit" value={"Login"} fullWidth color="primary" variant="outlined" />
-        </form>
+        <LoginForm />
       </Box>
     );
   };

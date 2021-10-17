@@ -1,38 +1,14 @@
 import { Grid, Paper, Box, Link } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import LockIcon from "@mui/icons-material/Lock";
 
 // Custom components
 import SignUpForm from "../../components/Form/Signup";
 
-// Hooks
-import { useFormik } from "formik";
-
-// Validation classes
-import Signup from "../../validations/signup";
-
 // Custom css file
 import "../../common.css";
 
 const SignUp = () => {
-  const { signUpStatus, setSignUpStatus } = useState(false);
-
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      address: "",
-      password: "",
-      confirmPassword: "",
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      console.log(values);
-      // submit form
-    },
-    validationSchema: Signup.signupValidation,
-  });
-
   const renderSignUpForm = () => {
     return (
       <Box
@@ -42,7 +18,7 @@ const SignUp = () => {
         noValidate
         autoComplete="off"
       >
-        <SignUpForm formik={formik} signUpStatus={signUpStatus} />
+        <SignUpForm />
       </Box>
     );
   };

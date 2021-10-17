@@ -7,8 +7,7 @@ const Page = ()=>{
   return (
     <Router>
       <Switch>
-      <Route exact path="/" component={()=><h1>Success</h1>}/>
-      <Route  path="/signin" component={SignIn}/>
+      <Route exact path="/" component={SignIn}/>
       <Route  path="/signup" component={SignUp}/>
     </Switch>
     </Router>

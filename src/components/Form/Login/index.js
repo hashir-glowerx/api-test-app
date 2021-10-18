@@ -5,10 +5,10 @@ import { Formik } from "formik";
 
 // Hooks
 import { useHistory } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Validation classes
-import Login from "../../../validations/login";
+import LoginValidation from "../../../validations/login";
 
 // api
 import api from "../../../api";
@@ -30,12 +30,28 @@ const LoginForm = () => {
     if (result.ok) {
       setLoginStatus(false);
       showToast(true, "Success");
-      history.push("/");
-      return;
-    } else showToast(false, result.message);
+      localStorage.setItem("login", JSON.stringify(result.ok));
 
+      return;
+    } else {
+      showToast(false, result.message);
+      localStorage.setItem("login", JSON.stringify(result.ok));
+    }
     setLoginStatus(false);
   };
+
+  useEffect(() => {
+    const getLocalItems = () => {
+      let token = localStorage.getItem("login");
+      let val = JSON.parse(localStorage.getItem("login"));
+      if (token) {
+        if (val) history.push("/");
+      } else {
+        return;
+      }
+    };
+    getLocalItems();
+  }, []);
 
   return (
     <Formik
@@ -44,13 +60,28 @@ const LoginForm = () => {
         password: "",
       }}
       onSubmit={handleSignUp}
-      validationSchema={Login.LoginValidation}
+      validationSchema={LoginValidation}
     >
       {(formikProps) => (
-        <form onSubmit={formikProps.handleSubmit} className="card-container__form">
+        <form
+          onSubmit={formikProps.handleSubmit}
+          className="card-container__form"
+        >
           <Input name="email" label="Email" placeholder="Email" />
-          <Input name="password" label="Password" type="password" placeholder="Password" />
-          <Button loading={loginStatus} type="submit" value={"Log in"} fullWidth color="primary" variant="outlined" />
+          <Input
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="Password"
+          />
+          <Button
+            loading={loginStatus}
+            type="submit"
+            value={"Log in"}
+            fullWidth
+            color="primary"
+            variant="outlined"
+          />
         </form>
       )}
     </Formik>

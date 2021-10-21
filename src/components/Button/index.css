@@ -6,9 +6,9 @@
 }
 
 .button:hover {
-    background-color: #82BC43 !important;
-    color: #fff !important;
-    border-color: #fff !important;
+        background-color: #82BC43 !important;
+        color: #fff !important;
+        border-color: #fff !important;
 }
 
 .button:disabled {

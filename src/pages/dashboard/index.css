@@ -1,0 +1,53 @@
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button__logout__dashboard {
+  text-decoration: none;
+  border: none;
+  color: white;
+  width: 125px;
+  padding: 12px;
+  background-color: rgba(10, 94, 109, 0.719);
+  
+}
+.button__logout__dashboard:hover {
+  background-color: #7eb9a8 ;
+  color: #fff ;
+  border-color: #fff ;
+}
+
+.button__addItem__dashboard {
+    text-decoration: none;
+    border: none;
+    color: white;
+    width: 125px;
+    padding: 12px;
+    background-color: #82BC43;
+  }
+  .button__addItem__dashboard:hover {
+    background-color: #82BC43 ;
+    color: #fff ;
+    border-color: #fff ;
+  }
+
+  .button__rows {
+    text-decoration: none;
+    border: none;
+    color: white;
+    width: 125px;
+    padding: 12px;
+    background-color: #df150e;
+  }
+  .button__rows:hover {
+    background-color: #d67a7a ;
+    color: #fff ;
+    border-color: #fff ;
+  }
+
+  .grid__container{
+
+    height: 100%;
+    width: 100%;
+  }

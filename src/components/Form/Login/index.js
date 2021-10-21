@@ -5,7 +5,8 @@ import { Formik } from "formik";
 
 // Hooks
 import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useState } from "react";
 
 // Validation classes
 import LoginValidation from "../../../validations/login";
@@ -28,63 +29,61 @@ const LoginForm = () => {
 
     const result = await api.login(data);
     if (result.ok) {
-      setLoginStatus(false);
       showToast(true, "Success");
-      localStorage.setItem("login", JSON.stringify(result.ok));
-
-      return;
+      localStorage.setItem("login", JSON.stringify(result.data["token"]));
+      history.push("/");
     } else {
       showToast(false, result.message);
-      localStorage.setItem("login", JSON.stringify(result.ok));
     }
+
     setLoginStatus(false);
   };
 
-  useEffect(() => {
-    const getLocalItems = () => {
-      let token = localStorage.getItem("login");
-      let val = JSON.parse(localStorage.getItem("login"));
-      if (token) {
-        if (val) history.push("/");
-      } else {
-        return;
-      }
-    };
-    getLocalItems();
-  }, []);
-
+  const isLogin = () => {
+    let token = localStorage.getItem("login");
+    if (token) return true;
+    return false;
+  };
+  if (!isLogin())
+    return (
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={handleSignUp}
+        validationSchema={LoginValidation}
+      >
+        {(formikProps) => (
+          <form
+            onSubmit={formikProps.handleSubmit}
+            className="card-container__form"
+          >
+            <Input name="email" label="Email" placeholder="Email" />
+            <Input
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="Password"
+            />
+            <Button
+              loading={loginStatus}
+              type="submit"
+              value={"Log in"}
+              fullWidth
+              color="primary"
+              variant="outlined"
+            />
+          </form>
+        )}
+      </Formik>
+    );
   return (
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
+    <Redirect
+      to={{
+        pathname: "/",
       }}
-      onSubmit={handleSignUp}
-      validationSchema={LoginValidation}
-    >
-      {(formikProps) => (
-        <form
-          onSubmit={formikProps.handleSubmit}
-          className="card-container__form"
-        >
-          <Input name="email" label="Email" placeholder="Email" />
-          <Input
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="Password"
-          />
-          <Button
-            loading={loginStatus}
-            type="submit"
-            value={"Log in"}
-            fullWidth
-            color="primary"
-            variant="outlined"
-          />
-        </form>
-      )}
-    </Formik>
+    />
   );
 };
 
